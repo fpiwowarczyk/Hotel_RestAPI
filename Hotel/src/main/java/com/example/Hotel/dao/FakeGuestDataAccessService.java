@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("fakeDao")
+@Repository("fakeGuestDao")
 public class FakeGuestDataAccessService implements GuestDao{
     public static List<Guest> DB = new ArrayList<>();
 
