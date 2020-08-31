@@ -26,7 +26,7 @@ public class RoomController {
     public List<Room> getAllRooms(){return roomService.getAllRooms();}
 
     @GetMapping(path="{nr}")
-    public Room getRoomById(@PathVariable("id") int nr){
+    public Room getRoomById(@PathVariable("nr") int nr){
         return roomService.getRoomByNr(nr)
                 .orElse(null);
     }

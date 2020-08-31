@@ -3,25 +3,23 @@ package com.example.Hotel.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 import java.util.UUID;
 
 public class Reservation {
     @NotBlank
     private final UUID id;
-    @NotBlank
     private final String start;
     private final String end;
-    private List<Guest> roomMates;
+    private String guest;
 
     public Reservation(@JsonProperty("id") UUID id,
                        @JsonProperty("start") String start,
                        @JsonProperty("end") String end,
-                       @JsonProperty("roomMates") List<Guest> roomMates){
+                       @JsonProperty("guest") String guest){
         this.id = id;
         this.start = start;
         this.end = end;
-        this.roomMates = roomMates;
+        this.guest = guest;
     }
 
     public UUID getId(){return id;}
@@ -30,5 +28,5 @@ public class Reservation {
 
     public String getEnd(){return end;}
 
-    public List<Guest> getRoomMates(){return roomMates;}
+    public String getRoomMates(){return guest;}
 }
