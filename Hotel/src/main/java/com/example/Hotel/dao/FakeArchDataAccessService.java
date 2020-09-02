@@ -32,27 +32,7 @@ public class FakeArchDataAccessService implements ArchDao {
                .findFirst();
     }
 
-    @Override
-    public int deleteArchById(UUID id) {
-        Optional<Arch> archMaybe = selectArchById(id);
-        if(archMaybe.isEmpty())
-            return 0;
-        DB.remove(archMaybe.get());
-        return 1;
-    }
 
-    @Override
-    public int updateArchById(UUID id, Arch update) {
-        return selectArchById(id)
-                .map(arch -> {
-                    int indexOfArchToUpdate = DB.indexOf(arch);
-                    if(indexOfArchToUpdate >= 0){
-                        DB.set(indexOfArchToUpdate, new Arch(update.getId(),update.getStart(),update.getEnd(),update.getRoomMates(),update.getReason()));
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                })
-                .orElse(0);
-    }
+
+
 }

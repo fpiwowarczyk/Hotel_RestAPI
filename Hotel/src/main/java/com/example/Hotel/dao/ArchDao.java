@@ -13,7 +13,4 @@ public interface ArchDao {
 
     Optional<Arch> selectArchById(UUID id);
 
-    int deleteArchById(UUID id);
-
-    int updateArchById(UUID id, Arch newArch);
 }

@@ -24,9 +24,4 @@ public class ArchService {
     public List<Arch> getAllArch(){return archDao.selectAllArch();}
 
     public Optional<Arch> getArchById(UUID id){return archDao.selectArchById(id);}
-
-    public int deleteArch(UUID id){return archDao.deleteArchById(id);}
-
-    public int updateArchById(UUID id,Arch newArch){return archDao.updateArchById(id,newArch);}
-
 }

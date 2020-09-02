@@ -2,6 +2,7 @@ package com.example.Hotel.api;
 
 
 import com.example.Hotel.model.Reservation;
+import com.example.Hotel.model.ReservationDatesChange;
 import com.example.Hotel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,11 @@ public class ReservationController {
     @PutMapping(path="{id}")
     public void updateReservation(@PathVariable("id")UUID id,@Valid @NotNull @RequestBody Reservation reservationToUpdate){
         reservationService.updateReservation(id,reservationToUpdate);
+    }
+
+    @PatchMapping(path="{id}")
+    public void updateReservationDate(@PathVariable("id") UUID id, @RequestBody ReservationDatesChange newDate){
+        reservationService.updateReservationDate(id,newDate);
     }
 
 }

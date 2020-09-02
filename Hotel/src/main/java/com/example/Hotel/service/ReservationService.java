@@ -3,6 +3,7 @@ package com.example.Hotel.service;
 
 import com.example.Hotel.dao.ReservationDao;
 import com.example.Hotel.model.Reservation;
+import com.example.Hotel.model.ReservationDatesChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,6 @@ public class ReservationService {
     public int deleteReservation(UUID id) {return reservationDao.deleteReservationById(id);}
 
     public int updateReservation(UUID id, Reservation newReservation){return reservationDao.updateReservationById(id,newReservation);}
+
+    public int updateReservationDate(UUID id,ReservationDatesChange newDate) {return reservationDao.updateReservationDateById(id,newDate);}
 }

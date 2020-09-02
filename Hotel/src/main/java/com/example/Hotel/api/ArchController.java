@@ -30,15 +30,4 @@ public class ArchController {
         return archService.getArchById(id)
                 .orElse(null);
     }
-
-    @DeleteMapping(path="{id}")
-    public void deleteArchById(@PathVariable("id") UUID id){archService.deleteArch(id);}
-
-    @PutMapping(path="{id}")
-    public void updateArch(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Arch archToUpdate){
-
-        archService.updateArchById(id,archToUpdate);
-    }
-
-
 }

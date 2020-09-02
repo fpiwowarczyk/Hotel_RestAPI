@@ -1,6 +1,8 @@
 package com.example.Hotel.dao;
 
+import com.example.Hotel.model.Arch;
 import com.example.Hotel.model.Reservation;
+import com.example.Hotel.model.ReservationDatesChange;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import java.util.UUID;
 
 @Repository("fakeReservationDao")
 public class FakeReservationAccessService implements ReservationDao {
+    private static FakeArchDataAccessService arch;
+    public static List<Arch> ArchDB = arch.getDB();
     public static List<Reservation> DB = new ArrayList<>();
 
 
@@ -36,7 +40,11 @@ public class FakeReservationAccessService implements ReservationDao {
         Optional<Reservation> reservationMaybe = selectReservationById(id);
         if(reservationMaybe.isEmpty())
             return 0;
-
+        ArchDB.add(new Arch(reservationMaybe.get().getId(),
+                    reservationMaybe.get().getStart(),
+                    reservationMaybe.get().getEnd(),
+                    reservationMaybe.get().getRoomMates(),
+                "Smth"));
         DB.remove(reservationMaybe.get());
         return 1;
     }
@@ -55,4 +63,21 @@ public class FakeReservationAccessService implements ReservationDao {
                 })
                 .orElse(0);
     }
+
+    @Override
+    public int updateReservationDateById(UUID id, ReservationDatesChange newDate) {
+        return selectReservationById(id)
+                .map(reservation -> {
+                    int indexOfReservationToUpdate =DB.indexOf(reservation);
+                    if(indexOfReservationToUpdate >=0){
+                        DB.set(indexOfReservationToUpdate,new Reservation(id,newDate.getStart(),newDate.getEnd(),reservation.getRoomMates()));
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                })
+                .orElse(0);
+    }
+
+
 }
