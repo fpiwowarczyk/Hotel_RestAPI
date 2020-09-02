@@ -36,6 +36,7 @@ public class FakeReservationAccessService implements ReservationDao {
         Optional<Reservation> reservationMaybe = selectReservationById(id);
         if(reservationMaybe.isEmpty())
             return 0;
+
         DB.remove(reservationMaybe.get());
         return 1;
     }

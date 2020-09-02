@@ -6,24 +6,30 @@ import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class Guest {
-    private final UUID id;
+    private final String idCardNr;
     @NotBlank
     private final String name;
     @NotBlank
     private final String surname;
 
-    public Guest(@JsonProperty("id") UUID id,
+    private final Integer room;
+
+    public Guest(@JsonProperty("idCardNr") String idCardNr,
                  @JsonProperty("name") String name,
-                 @JsonProperty("surname") String surname){
-        this.id = id;
+                 @JsonProperty("surname") String surname,
+                 @JsonProperty("room") Integer room){
+        this.idCardNr = idCardNr;
         this.name = name;
         this.surname = surname;
+        this.room  = room;
     }
 
 
-    public UUID getId(){return id;}
+    public String getIdCardNr(){return idCardNr;}
 
     public String getName(){return name;}
 
     public String getSurname(){return surname;}
+
+    public Integer getRoom(){return room;}
 }

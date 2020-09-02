@@ -1,6 +1,7 @@
 package com.example.Hotel.api;
 
 import com.example.Hotel.model.Guest;
+import com.example.Hotel.model.GuestRoomChange;
 import com.example.Hotel.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @RequestMapping("/guest")
 @RestController
@@ -31,20 +31,26 @@ public class GuestController {
         return guestService.getAllGuests();
     }
 
-    @GetMapping(path="{id}")
-    public Guest getGuestById(@PathVariable("id") UUID id){
-        return guestService.getGuestById(id)
+    @GetMapping(path="{idCardNr}")
+    public Guest getGuestById(@PathVariable("idCardNr") String idCardNr){
+        return guestService.getGuestById(idCardNr)
                 .orElse(null);
     }
 
 
-    @DeleteMapping(path="{id}")
-    public void deleteGuestById(@PathVariable("id") UUID id){
-        guestService.deleteGuest(id);
+    @DeleteMapping(path="{idCardNr}")
+    public void deleteGuestById(@PathVariable("idCardNr") String idCardNr){
+        guestService.deleteGuest(idCardNr);
     }
 
-    @PutMapping(path = "{id}")
-    public void updateGuest(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Guest guestToUpdate){
-        guestService.updateGuest(id,guestToUpdate);
+    @PutMapping(path = "{idCardNr}")
+    public void updateGuest(@PathVariable("idCardNr") String idCardNr, @Valid @NotNull @RequestBody Guest guestToUpdate){
+        guestService.updateGuest(idCardNr,guestToUpdate);
     }
+
+    @PatchMapping(path="{idCardNr}")
+    public void updateRoomGuest(@PathVariable("idCardNr")String idCardNr, @RequestBody GuestRoomChange room){
+        guestService.updateRoomGuest(idCardNr,room);
+    }
+
 }
