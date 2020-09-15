@@ -1,5 +1,6 @@
 package com.example.Hotel.model;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;

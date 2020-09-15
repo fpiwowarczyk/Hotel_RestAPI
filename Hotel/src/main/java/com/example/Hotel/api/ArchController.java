@@ -15,7 +15,6 @@ import java.util.UUID;
 @RestController
 public class ArchController {
     private final ArchService archService;
-
     @Autowired
     public ArchController(ArchService archService){this.archService = archService;}
 

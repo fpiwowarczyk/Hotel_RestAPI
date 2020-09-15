@@ -13,7 +13,6 @@ import java.util.UUID;
 @Repository("fakeReservationDao")
 public class FakeReservationAccessService implements ReservationDao {
     private static FakeArchDataAccessService arch;
-    public static List<Arch> ArchDB = arch.getDB();
     public static List<Reservation> DB = new ArrayList<>();
 
 
@@ -40,11 +39,6 @@ public class FakeReservationAccessService implements ReservationDao {
         Optional<Reservation> reservationMaybe = selectReservationById(id);
         if(reservationMaybe.isEmpty())
             return 0;
-        ArchDB.add(new Arch(reservationMaybe.get().getId(),
-                    reservationMaybe.get().getStart(),
-                    reservationMaybe.get().getEnd(),
-                    reservationMaybe.get().getRoomMates(),
-                "Smth"));
         DB.remove(reservationMaybe.get());
         return 1;
     }
