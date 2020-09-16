@@ -16,7 +16,7 @@ public class GuestService {
     private final GuestDao guestDao;
 
     @Autowired
-    public GuestService(@Qualifier("fakeGuestDao")GuestDao guestDao) {this.guestDao = guestDao;}
+    public GuestService(@Qualifier("postgres")GuestDao guestDao) {this.guestDao = guestDao;}
     public int addGuest(Guest guest) {return guestDao.insertGuest(guest);}
 
     public List<Guest> getAllGuests() {return  guestDao.selectAllGuests();}

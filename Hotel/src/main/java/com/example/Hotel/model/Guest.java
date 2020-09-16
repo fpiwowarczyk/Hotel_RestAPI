@@ -2,10 +2,12 @@ package com.example.Hotel.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotBlank;
 
-public class Guest {
+public class Guest extends RepresentationModel<Guest> {
+    @NotBlank
     private final String idCardNr;
     @NotBlank
     private final String name;
