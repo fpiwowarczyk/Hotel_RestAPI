@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "guests")
+@Table(name = "guest")
 
 public class GuestEntity extends RepresentationModel<GuestEntity> {
 
@@ -27,7 +27,6 @@ public class GuestEntity extends RepresentationModel<GuestEntity> {
     @NotBlank
     private String surname;
 
-    @NotBlank
     private Integer room;
 
     public String getIdCardNr(){

@@ -3,7 +3,6 @@ package com.example.Hotel.api;
 import com.example.Hotel.Assemblers.GuestModelAssembler;
 import com.example.Hotel.Entity.GuestEntity;
 import com.example.Hotel.model.GuestModel;
-import com.example.Hotel.model.GuestRoomChange;
 import com.example.Hotel.service.GuestService;
 import com.example.Hotel.model.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -64,17 +62,17 @@ public class GuestController {
 
     @DeleteMapping(path="{idCardNr}")
     public void deleteGuestById(@PathVariable("idCardNr") String idCardNr){
-        guestService.deleteGuest(idCardNr);
+        guestService.deleteGuestById(idCardNr);
     }
 
     @PutMapping(path = "{idCardNr}")
-    public void updateGuest(@PathVariable("idCardNr") String idCardNr, @Valid @NotNull @RequestBody Guest guestToUpdate){
-        guestService.updateGuest(idCardNr,guestToUpdate);
+    public ResponseEntity<EntityModel<GuestEntity>> updateGuestById(@PathVariable("idCardNr") String idCardNr,@RequestBody GuestEntity guestToUpdate){
+        return guestService.updateGuestById(idCardNr,guestToUpdate);
     }
 
-    @PatchMapping(path="{idCardNr}")
-    public void updateRoomGuest(@PathVariable("idCardNr")String idCardNr, @RequestBody GuestRoomChange room){
-        guestService.updateRoomGuest(idCardNr,room);
+    @PatchMapping(path = "{idCardNr}")
+    public ResponseEntity<GuestEntity> updatePartialGuestById(@PathVariable("idCardNr") String idCardNr,@RequestBody Guest guestToUpdate){
+        return guestService.updatePartGuestById(idCardNr,guestToUpdate);
     }
 
 }

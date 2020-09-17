@@ -32,6 +32,7 @@ public class GuestModel extends RepresentationModel<GuestModel> {
     public void setSurname(String surname){
         this.surname = surname;
     }
+
     public void setRoom(Integer room){
         this.room = room;
     }

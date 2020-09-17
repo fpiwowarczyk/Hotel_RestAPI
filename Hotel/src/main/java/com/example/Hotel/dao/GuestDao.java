@@ -2,7 +2,6 @@ package com.example.Hotel.dao;
 
 
 import com.example.Hotel.model.Guest;
-import com.example.Hotel.model.GuestRoomChange;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +18,4 @@ public interface GuestDao {
 
     int updateGuestById(String idCardNr,Guest newGuest); // update
 
-    int updateRoomGuest(String idCardNr, GuestRoomChange room); //update part
 } // Guest DAO

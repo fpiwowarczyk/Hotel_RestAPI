@@ -5,18 +5,19 @@ import com.example.Hotel.Entity.GuestEntity;
 import com.example.Hotel.dao.GuestDao;
 import com.example.Hotel.dao.GuestRepository;
 import com.example.Hotel.model.Guest;
-import com.example.Hotel.model.GuestRoomChange;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.List;
+import javax.swing.text.html.parser.Entity;
 import java.util.Optional;
 
 @Service
@@ -50,21 +51,44 @@ public class GuestService {
         }
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
-
-        public int updateGuest(String idCardNr,Guest newGuest){
-            GuestEntity guest = guestRepository.findById(idCardNr).orElse(new GuestEntity());
-            if(guest.getIdCardNr()==null){
-                guest.setIdCardNr(idCardNr);
-            }
-            if(newGuest.getName()!= null && newGuest.getSurname() != null && newGuest.getRoom()!=null){
-                guest.setName(newGuest.getName());
-                guest.setSurname(newGuest.getSurname());
-                guest.setRoom(newGuest.getRoom());
-                guestRepository.save(guest);
-                return 1;
-            }
-            return 0;
+    public ResponseEntity<EntityModel<GuestEntity>> updateGuestById(String idCardNr,GuestEntity newGuest){ // Nie dziala
+        GuestEntity guest = guestRepository.findById(idCardNr).orElse(newGuest);
+        if(!StringUtils.isEmpty(newGuest.getIdCardNr())&&
+            !StringUtils.isEmpty(newGuest.getName())&&
+            !StringUtils.isEmpty(newGuest.getSurname())&&
+            !(newGuest.getRoom()==null)){
+            guest.setIdCardNr(idCardNr);
+            //Link link = linkTo(CarController.class).slash(client.getId()).withSelfRel(); TODO
+            //Link linkAll = linkTo(CarController.class).withRel("All clients"); TODO
+            EntityModel<GuestEntity> guestEntityEntityModel = EntityModel.of(guestRepository.save(guest)/*link,linkall*/);
+            new ResponseEntity<>(guestEntityEntityModel,HttpStatus.CREATED);
+        } else if (!StringUtils.isEmpty(newGuest.getName())&&
+                    !StringUtils.isEmpty(newGuest.getSurname())&&
+                    !(newGuest.getRoom()==null)){
+            guest.setName(newGuest.getName());
+            guest.setSurname(newGuest.getSurname());
+            guest.setRoom(newGuest.getRoom());
+            new ResponseEntity<>(guestRepository.save(guest),HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    }
 
-    public int updateRoomGuest(String idCardNr, GuestRoomChange room){return guestDao.updateRoomGuest(idCardNr,room);}//TODO
+    public ResponseEntity<GuestEntity> updatePartGuestById(String idCardNr, Guest newGuest){
+        GuestEntity guest = guestRepository.findById(idCardNr).orElse(null);
+        if(guest != null) {
+            Optional.ofNullable(newGuest.getName())
+                    .filter(name -> !StringUtils.isEmpty(name))
+                    .map (StringUtils::capitalize)
+                    .ifPresent(name -> guest.setName(newGuest.getName()));
+            Optional.ofNullable(newGuest.getSurname())
+                    .filter(surname -> !StringUtils.isEmpty(surname))
+                    .map(StringUtils::capitalize)
+                    .ifPresent(surname ->guest.setSurname(newGuest.getSurname()));
+            Optional.ofNullable(newGuest.getRoom())
+                    .filter(room -> room!=null)
+                    .ifPresent(room -> guest.setRoom(newGuest.getRoom()));
+            return new ResponseEntity<>(guestRepository.save(guest),HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
 }

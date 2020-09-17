@@ -1,7 +1,6 @@
 package com.example.Hotel.dao;
 
 
-import com.example.Hotel.model.GuestRoomChange;
 import com.example.Hotel.model.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,7 +49,7 @@ public class GuestDataAccessService implements GuestDao {
                 String GuestIdCardNr = resultSet.getString(("id_card_nr"));
                 String name = resultSet.getString("name");
                 String surname = resultSet.getString("surname");
-                Integer room = resultSet.getInt("room");
+                int room = resultSet.getInt("room");
                 return new Guest(GuestIdCardNr,name,surname,room);
          });
         return Optional.ofNullable(guest);
@@ -70,9 +69,4 @@ public class GuestDataAccessService implements GuestDao {
         return jdbcTemplate.update(sql, newGuest.getIdCardNr(),newGuest.getName(),newGuest.getSurname(),newGuest.getRoom(),idCardNr);
     }
 
-    @Override
-    public int updateRoomGuest(String idCardNr, GuestRoomChange room){
-        final String sql = "UPDATE guest SET room= ? WHERE id_card_nr = ?"; // Naprawic to albo zrobic tak jak ma Mateusz
-        return jdbcTemplate.update(sql,room.getNr(),idCardNr);
-    }
 }

@@ -16,9 +16,10 @@ public class HotelApplication {
 /*
 * TODO
 * 1. Dodać logike do manipulowania baza danych Almost Done
-* 2. Dodac stronnicowanie
-* 3. Dodac tebelki dla pozostalych obiektow
-* 4. Dodac zaleznosci w tablekach
-* 5.  Dodać kontrole wersji
-*
+* 2. Dodac stronnicowanie Jest
+* 3. Dodac tebelki dla pozostalych obiektow Nie ma
+* 4. Dodac zaleznosci w tablekach Nie ma
+* 5. Dodać kontrole wersji Nie ma
+* 6. Dodac linki
+* 7. Nie wiem co jeszcze zmeczony jestem tym projektem 
  */
