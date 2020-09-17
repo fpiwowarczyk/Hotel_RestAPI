@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Optional;
 
 @Service
@@ -53,22 +52,14 @@ public class GuestService {
     }
     public ResponseEntity<EntityModel<GuestEntity>> updateGuestById(String idCardNr,GuestEntity newGuest){ // Nie dziala
         GuestEntity guest = guestRepository.findById(idCardNr).orElse(newGuest);
-        if(!StringUtils.isEmpty(newGuest.getIdCardNr())&&
-            !StringUtils.isEmpty(newGuest.getName())&&
+        if(!StringUtils.isEmpty(newGuest.getName())&&
             !StringUtils.isEmpty(newGuest.getSurname())&&
-            !(newGuest.getRoom()==null)){
-            guest.setIdCardNr(idCardNr);
-            //Link link = linkTo(CarController.class).slash(client.getId()).withSelfRel(); TODO
-            //Link linkAll = linkTo(CarController.class).withRel("All clients"); TODO
-            EntityModel<GuestEntity> guestEntityEntityModel = EntityModel.of(guestRepository.save(guest)/*link,linkall*/);
-            new ResponseEntity<>(guestEntityEntityModel,HttpStatus.CREATED);
-        } else if (!StringUtils.isEmpty(newGuest.getName())&&
-                    !StringUtils.isEmpty(newGuest.getSurname())&&
-                    !(newGuest.getRoom()==null)){
+            newGuest.getRoom()!=null){
             guest.setName(newGuest.getName());
             guest.setSurname(newGuest.getSurname());
             guest.setRoom(newGuest.getRoom());
-            new ResponseEntity<>(guestRepository.save(guest),HttpStatus.NO_CONTENT);
+            EntityModel<GuestEntity> entityEntityModel = EntityModel.of(guestRepository.save(guest));
+            return new ResponseEntity<>(entityEntityModel,HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }

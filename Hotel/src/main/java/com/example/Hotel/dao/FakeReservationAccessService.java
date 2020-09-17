@@ -1,8 +1,6 @@
 package com.example.Hotel.dao;
 
-import com.example.Hotel.model.Arch;
 import com.example.Hotel.model.Reservation;
-import com.example.Hotel.model.ReservationDatesChange;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -50,21 +48,6 @@ public class FakeReservationAccessService implements ReservationDao {
                     int indexOfReservationToUpdate = DB.indexOf(reservation);
                     if(indexOfReservationToUpdate >= 0){
                         DB.set(indexOfReservationToUpdate, new Reservation(id,update.getStart(),update.getEnd(),update.getRoomMates()));
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                })
-                .orElse(0);
-    }
-
-    @Override
-    public int updateReservationDateById(UUID id, ReservationDatesChange newDate) {
-        return selectReservationById(id)
-                .map(reservation -> {
-                    int indexOfReservationToUpdate =DB.indexOf(reservation);
-                    if(indexOfReservationToUpdate >=0){
-                        DB.set(indexOfReservationToUpdate,new Reservation(id,newDate.getStart(),newDate.getEnd(),reservation.getRoomMates()));
                         return 1;
                     } else {
                         return 0;

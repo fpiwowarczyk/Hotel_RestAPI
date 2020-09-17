@@ -49,7 +49,6 @@ public class GuestEntity extends RepresentationModel<GuestEntity> {
         this.idCardNr = idCardNr;
     }
 
-
     public void setName(String name){
         this.name =  name;
     }
@@ -61,8 +60,4 @@ public class GuestEntity extends RepresentationModel<GuestEntity> {
     public void setRoom(Integer room){
         this.room = room;
     }
-
-
-
-
 }

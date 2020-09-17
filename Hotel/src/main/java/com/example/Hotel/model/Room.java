@@ -6,16 +6,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class Room {
+
     @NotBlank
     private final Integer nr;
-    @NotBlank
-    private final int price;
-    private int capacity;
+
+    private final Integer price;
+
+    private Integer capacity;
+
     private Boolean free;
 
     public Room(@JsonProperty("nr") Integer nr,
-                @JsonProperty("price") int price,
-                @JsonProperty("capacity") int capacity,
+                @JsonProperty("price") Integer price,
+                @JsonProperty("capacity") Integer capacity,
                 @JsonProperty("free") Boolean free){
         this.nr = nr;
         this.price = price;

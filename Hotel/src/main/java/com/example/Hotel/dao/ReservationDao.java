@@ -1,7 +1,6 @@
 package com.example.Hotel.dao;
 
 import com.example.Hotel.model.Reservation;
-import com.example.Hotel.model.ReservationDatesChange;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,5 +21,4 @@ public interface ReservationDao {
 
     int updateReservationById(UUID id,Reservation newReservation);
 
-    int updateReservationDateById(UUID id, ReservationDatesChange newDate);
 }

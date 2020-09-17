@@ -18,7 +18,7 @@ public class GuestModelAssembler extends RepresentationModelAssemblerSupport<Gue
     @Override
     public GuestModel toModel(GuestEntity entity){
         GuestModel guestModel = instantiateModel(entity);
-        guestModel.add(linkTo(GuestController.class).slash((entity.getIdCardNr()))
+        guestModel.add(linkTo(GuestController.class).slash(entity.getIdCardNr())
                 .withSelfRel());
 
         guestModel.setIdCardNr(entity.getIdCardNr());

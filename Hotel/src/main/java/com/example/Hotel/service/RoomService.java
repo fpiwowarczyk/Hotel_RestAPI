@@ -1,30 +1,55 @@
 package com.example.Hotel.service;
 
 
+import com.example.Hotel.Entity.RoomEntity;
 import com.example.Hotel.dao.RoomDao;
-import com.example.Hotel.model.Room;
+import com.example.Hotel.dao.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RoomService {
 
-    private final RoomDao roomDao;
 
     @Autowired
-    public RoomService(@Qualifier("fakeRoomDao")RoomDao roomDao){this.roomDao=roomDao;}
-    public int addRoom(Room room) {return roomDao.insertRoom(room);}
+    private RoomRepository roomRepository;
 
-    public List<Room> getAllRooms() {return roomDao.selectAllRooms();}
+    public RoomEntity addRoom(RoomEntity room) {return roomRepository.save(room);}
 
-    public Optional<Room> getRoomByNr(Integer nr){return roomDao.selectRoomByNr(nr);}
+    public Page<RoomEntity> getAllRooms(Pageable pageable) {return roomRepository.findAll(pageable);}
 
-    public int deleteRoom(Integer nr) {return roomDao.deleteRoomByNr(nr);}
+    public Optional<RoomEntity> getRoomByNr(Integer nr){return roomRepository.findById(nr);}
 
-    public int updateRoom(Integer nr, Room newRoom){return roomDao.updateRoomByNr(nr,newRoom);}
+    public ResponseEntity<RoomEntity> deleteRoomByNr(Integer nr) {
+        RoomEntity room = roomRepository.findById(nr).orElse(null);
+        if(room != null){
+            roomRepository.deleteById(nr);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<EntityModel<RoomEntity>> updateRoomByNr(Integer nr, RoomEntity newRoom){
+        RoomEntity room = roomRepository.findById(nr).orElse(newRoom);
+        if(newRoom.getNr()!=null&&
+            newRoom.getPrice()!=null&&
+            newRoom.getCapacity()!=null){
+            room.setNr(newRoom.getNr());
+            room.setPrice(newRoom.getPrice());
+            room.setCapacity(newRoom.getCapacity());
+            room.setFree(newRoom.getFree());
+            EntityModel<RoomEntity> entityEntityModel = EntityModel.of(roomRepository.save(room));
+            return new ResponseEntity<>(entityEntityModel,HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    }
 
 }

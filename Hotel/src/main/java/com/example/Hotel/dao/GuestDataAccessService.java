@@ -23,12 +23,11 @@ public class GuestDataAccessService implements GuestDao {
     public int insertGuest(Guest guest) {
         final String sql = "INSERT INTO guest (id_card_nr,name,surname,room) VALUES (?,?,?,?)";
         return jdbcTemplate.update(sql,guest.getIdCardNr(),guest.getName(),guest.getSurname(),guest.getRoom());
-
     }
 
     @Override
     public List<Guest> selectAllGuests() {
-        final String sql = "SELECT id_card_nr,name,surname,room  FROM guest"; // as well i could use *
+        final String sql = "SELECT id_card_nr,name,surname,room  FROM guest";
         List<Guest> guests =jdbcTemplate.query(sql,(resultSet,i)->{
             return new Guest(resultSet.getString("id_card_nr"),
                              resultSet.getString("name"),
@@ -46,14 +45,13 @@ public class GuestDataAccessService implements GuestDao {
             sql,
             new Object[]{idCardNr},
                 (resultSet, i) -> {
-                String GuestIdCardNr = resultSet.getString(("id_card_nr"));
+                String GuestIdCardNr = resultSet.getString("id_card_nr");
                 String name = resultSet.getString("name");
                 String surname = resultSet.getString("surname");
                 int room = resultSet.getInt("room");
                 return new Guest(GuestIdCardNr,name,surname,room);
          });
         return Optional.ofNullable(guest);
-
 
     }
 
@@ -68,5 +66,4 @@ public class GuestDataAccessService implements GuestDao {
         final String sql = "UPDATE guest SET id_card_nr = ?, name = ?,surname = ?,room = ? WHERE id_card_nr = ?";
         return jdbcTemplate.update(sql, newGuest.getIdCardNr(),newGuest.getName(),newGuest.getSurname(),newGuest.getRoom(),idCardNr);
     }
-
 }

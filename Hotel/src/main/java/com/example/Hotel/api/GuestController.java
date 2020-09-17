@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -49,7 +47,6 @@ public class GuestController {
         PagedModel<GuestModel> guestCollectionModel = pagedResourcesAssembler.toModel(allGuest,guestModelAssembler);
         return new ResponseEntity<>(guestCollectionModel, HttpStatus.OK);
     }
-
 
     @GetMapping(path="{idCardNr}")
     public ResponseEntity<EntityModel<GuestEntity>> getGuestById(@PathVariable("idCardNr") String idCardNr){
