@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("fakeGuestDao")
-public class FakeGuestDataAccessService implements GuestDao{
+public class FakeGuestDataAccessService implements GuestDao {
     public static List<Guest> DB = new ArrayList<>();
 
     @Override
