@@ -2,10 +2,8 @@ package com.example.Hotel.service;
 
 
 import com.example.Hotel.Entity.RoomEntity;
-import com.example.Hotel.dao.RoomDao;
 import com.example.Hotel.dao.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
@@ -32,7 +30,7 @@ public class RoomService {
         RoomEntity room = roomRepository.findById(nr).orElse(null);
         if(room != null){
             roomRepository.deleteById(nr);
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }
         return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
@@ -47,7 +45,7 @@ public class RoomService {
             room.setCapacity(newRoom.getCapacity());
             room.setFree(newRoom.getFree());
             EntityModel<RoomEntity> entityEntityModel = EntityModel.of(roomRepository.save(room));
-            return new ResponseEntity<>(entityEntityModel,HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(entityEntityModel,HttpStatus.OK);
         }
         return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }

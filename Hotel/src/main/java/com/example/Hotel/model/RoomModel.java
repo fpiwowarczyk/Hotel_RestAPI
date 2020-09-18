@@ -35,7 +35,4 @@ public class RoomModel extends RepresentationModel<RoomModel> {
     public Integer getCapacity(){return capacity;}
 
     public Boolean getFree(){return free;}
-
-
-
 }

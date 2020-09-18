@@ -1,15 +1,25 @@
 package com.example.Hotel.api;
 
 
+import com.example.Hotel.Assemblers.ReservationModelAssembler;
+import com.example.Hotel.Entity.ReservationEntity;
 import com.example.Hotel.model.Reservation;
+import com.example.Hotel.model.ReservationModel;
 import com.example.Hotel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.UUID;
+
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RequestMapping("/reservation")
 @RestController
@@ -20,26 +30,38 @@ public class ReservationController {
     @Autowired
     public ReservationController(ReservationService reservationService) {this.reservationService = reservationService;}
 
+    @Autowired
+    private PagedResourcesAssembler pagedResourcesAssembler;
+
+    @Autowired
+    private ReservationModelAssembler reservationModelAssembler;
+
     @PostMapping
-    public void addReservation(@Valid @NotNull @RequestBody Reservation reservation){ reservationService.addReservation(reservation);}
+    public void addReservation(@RequestBody ReservationEntity reservation){ reservationService.addReservation(reservation);}
 
     @GetMapping
-    public List<Reservation> getAllReservations() {return reservationService.getAllReservations();}
+    public ResponseEntity<PagedModel<ReservationModel>> getAllReservations(Pageable pageable) {
+        Page<ReservationEntity> allReservations = reservationService.getAllReservations(pageable);
+        PagedModel<ReservationModel> reservationCollectionModel = pagedResourcesAssembler.toModel(allReservations,reservationModelAssembler);
+        return new ResponseEntity<>(reservationCollectionModel, HttpStatus.OK);
+    }
 
     @GetMapping(path="{id}")
-    public Reservation getReservationById(@PathVariable("id") UUID id){
-        return reservationService.getReservationById(id)
-                .orElse(null);
+    public ResponseEntity<EntityModel<ReservationEntity>> getReservationById(@PathVariable("id") String id){
+        Link link = linkTo(ReservationController.class).slash(id).withSelfRel();
+        Link linkAll = linkTo(ReservationController.class).withRel("All Reservations");
+        EntityModel<ReservationEntity> reservationEntityModel = EntityModel.of(reservationService.getReservationById(id).orElse(null));
+        return new ResponseEntity<>(reservationEntityModel,HttpStatus.OK);
     }
 
     @DeleteMapping(path="{id}")
-    public void deleteReservationById(@PathVariable("id") UUID id){
-        reservationService.deleteReservation(id);
+    public void deleteReservationById(@PathVariable("id") String id){
+        reservationService.deleteReservationById(id);
     }
 
     @PutMapping(path="{id}")
-    public void updateReservation(@PathVariable("id")UUID id,@Valid @NotNull @RequestBody Reservation reservationToUpdate){
-        reservationService.updateReservation(id,reservationToUpdate);
+    public ResponseEntity<EntityModel<ReservationEntity>> updateReservationById(@PathVariable("id")String id,@RequestBody ReservationEntity reservationToUpdate){
+        return reservationService.updateReservationById(id,reservationToUpdate);
     }
 
 

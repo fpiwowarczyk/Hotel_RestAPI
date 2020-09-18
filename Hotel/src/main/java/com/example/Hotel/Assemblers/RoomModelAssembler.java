@@ -2,12 +2,8 @@ package com.example.Hotel.Assemblers;
 
 
 import com.example.Hotel.Entity.RoomEntity;
-import com.example.Hotel.api.GuestController;
 import com.example.Hotel.api.RoomController;
-import com.example.Hotel.model.GuestModel;
 import com.example.Hotel.model.RoomModel;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 

@@ -1,34 +1,34 @@
 package com.example.Hotel.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class Arch {
-    private final UUID id;
-    private final LocalDate start;
-    private final LocalDate end;
-    private String guest;
-    private String reason;
 
-    public Arch(UUID id,
-                LocalDate start,
-                LocalDate end,
-                String guest,
-                String reason){
+    private final UUID id;
+    @NotBlank
+    private final String start;
+    @NotBlank
+    private final String end;
+    private String guestIdCardNr;
+
+    public Arch(@JsonProperty("id") UUID id,
+                       @JsonProperty("start") String start, //YYYY-MM-DD
+                       @JsonProperty("end") String end,//YYYY-MM-DD
+                       @JsonProperty("guest") String guestIdCardNr){
         this.id = id;
         this.start = start;
         this.end = end;
-        this.guest  = guest;
-        this.reason = reason;
+        this.guestIdCardNr= guestIdCardNr;
     }
 
     public UUID getId(){return id;}
 
-    public LocalDate getStart(){return start;}
+    public String getStart(){return start;}
 
-    public LocalDate getEnd(){return end;}
+    public String getEnd(){return end;}
 
-    public String getRoomMates(){return guest;}
-
-    public String getReason(){return reason;}
+    public String guestIdCardNr(){return guestIdCardNr;}
 }

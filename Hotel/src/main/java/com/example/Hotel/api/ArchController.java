@@ -1,6 +1,6 @@
 package com.example.Hotel.api;
 
-
+/*
 import com.example.Hotel.model.Arch;
 import com.example.Hotel.service.ArchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,3 +30,4 @@ public class ArchController {
                 .orElse(null);
     }
 }
+*/
