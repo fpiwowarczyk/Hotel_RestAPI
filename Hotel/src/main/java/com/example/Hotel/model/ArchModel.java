@@ -13,30 +13,29 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ArchModel extends RepresentationModel<ArchModel> {
+    private String id;
 
-    private UUID id;
+    private String start_of;
 
-    private String start;
+    private String end_of;
 
-    private String end;
+    private String guest_id_card_nr;
 
-    private String guestIdCardNr;
+    public void setId(String id){this.id = id;}
 
-    public void setId(UUID id){this.id = id;}
+    public void setStart_of(String start_of){this.start_of = start_of;}
 
-    public void setStart(String start){this.start = start;}
+    public void setEnd_of(String end_of){this.end_of = end_of;}
 
-    public void setEnd(String end){this.end = end;}
-
-    public void setGuestIdCardNr(String guestIdCardNr){
-        this.guestIdCardNr = guestIdCardNr;
+    public void setGuestIdCardNr(String guest_id_card_nr){
+        this.guest_id_card_nr = guest_id_card_nr;
     }
 
-    public UUID getId(){return id;}
+    public String getId(){return id;}
 
-    public String getStart(){return start;}
+    public String getStart_of(){return start_of;}
 
-    public String getEnd(){return end;}
+    public String getEnd_of(){return end_of;}
 
-    public String getGuestIdCardNr(){return guestIdCardNr;}
+    public String getGuest_Id_Card_Nr(){return guest_id_card_nr;}
 }

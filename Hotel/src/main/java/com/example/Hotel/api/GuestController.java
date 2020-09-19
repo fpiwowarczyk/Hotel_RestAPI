@@ -4,7 +4,6 @@ import com.example.Hotel.Assemblers.GuestModelAssembler;
 import com.example.Hotel.Entity.GuestEntity;
 import com.example.Hotel.model.GuestModel;
 import com.example.Hotel.service.GuestService;
-import com.example.Hotel.model.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +67,7 @@ public class GuestController {
     }
 
     @PatchMapping(path = "{idCardNr}")
-    public ResponseEntity<GuestEntity> updatePartialGuestById(@PathVariable("idCardNr") String idCardNr,@RequestBody Guest guestToUpdate){
+    public ResponseEntity<GuestEntity> updatePartialGuestById(@PathVariable("idCardNr") String idCardNr,@RequestBody GuestEntity guestToUpdate){
         return guestService.updatePartGuestById(idCardNr,guestToUpdate);
     }
 

@@ -3,8 +3,8 @@ package com.example.Hotel.api;
 
 import com.example.Hotel.Assemblers.ReservationModelAssembler;
 import com.example.Hotel.Entity.ReservationEntity;
-import com.example.Hotel.model.Reservation;
 import com.example.Hotel.model.ReservationModel;
+import com.example.Hotel.service.ArchService;
 import com.example.Hotel.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,8 +27,11 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
+
     @Autowired
-    public ReservationController(ReservationService reservationService) {this.reservationService = reservationService;}
+    public ReservationController(ReservationService reservationService,ArchService archService) {
+        this.reservationService = reservationService;
+    }
 
     @Autowired
     private PagedResourcesAssembler pagedResourcesAssembler;
@@ -56,6 +59,7 @@ public class ReservationController {
 
     @DeleteMapping(path="{id}")
     public void deleteReservationById(@PathVariable("id") String id){
+
         reservationService.deleteReservationById(id);
     }
 

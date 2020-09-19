@@ -1,33 +1,54 @@
 package com.example.Hotel.api;
 
-/*
-import com.example.Hotel.model.Arch;
+
+import com.example.Hotel.Assemblers.ArchModelAssembler;
+import com.example.Hotel.Entity.ArchEntity;
+import com.example.Hotel.model.ArchModel;
 import com.example.Hotel.service.ArchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.UUID;
+
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RequestMapping("/arch")
 @RestController
 public class ArchController {
-    private final ArchService archService;
-    @Autowired
-    public ArchController(ArchService archService){this.archService = archService;}
 
-    @PostMapping
-    public void addArch(@Valid @NotNull @RequestBody Arch arch){archService.addArch(arch);}
+    private final ArchService archService;
+
+    @Autowired
+    public ArchController(ArchService archService) {
+        this.archService = archService;
+    }
+
+    @Autowired
+    private PagedResourcesAssembler pagedResourcesAssembler;
+
+    @Autowired
+    private ArchModelAssembler archModelAssembler;
 
     @GetMapping
-    public List<Arch> getAllArch(){return archService.getAllArch();}
+    public ResponseEntity<PagedModel<ArchModel>> getAllArchs(Pageable pageable) {
+        Page<ArchEntity> allArchs = archService.getAllArchs(pageable);
+        PagedModel<ArchModel> archCollectionModel = pagedResourcesAssembler.toModel(allArchs, archModelAssembler);
+        return new ResponseEntity<>(archCollectionModel, HttpStatus.OK);
+    }
 
-    @GetMapping(path="{id}")
-    public Arch getArchById(@PathVariable("id") UUID id){
-        return archService.getArchById(id)
-                .orElse(null);
+    @GetMapping(path = "{id}")
+    public ResponseEntity<EntityModel<ArchEntity>> getArchById(@PathVariable("id") String id) {
+        Link link = linkTo(ArchController.class).slash(id).withSelfRel();
+        Link linkAll = linkTo(ArchController.class).withRel("All archs");
+        EntityModel<ArchEntity> archEntityModel = EntityModel.of(archService.getArchById(id).orElse(null));
+        return new ResponseEntity<>(archEntityModel, HttpStatus.OK);
     }
 }
-*/

@@ -1,27 +1,33 @@
 package com.example.Hotel.service;
 
-/*
-import com.example.Hotel.dao.ArchDao;
-import com.example.Hotel.model.Arch;
+
+import com.example.Hotel.Entity.ArchEntity;
+import com.example.Hotel.dao.ArchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class ArchService {
 
-
     @Autowired
-    public ArchService(@Qualifier("fakeArchDao")ArchDao archDao){this.archDao = archDao;}
+    private ArchRepository archRepository;
 
-    public int addArch(Arch arch) {return archDao.insertArch(arch);}
 
-    public List<Arch> getAllArch(){return archDao.selectAllArch();}
+    public ArchEntity addArch(ArchEntity arch) {
+        arch.setId(UUID.randomUUID().toString());
+        return archRepository.save(arch);
+    }
 
-    public Optional<Arch> getArchById(UUID id){return archDao.selectArchById(id);}
+    public Page<ArchEntity> getAllArchs(Pageable pageable) {
+        return archRepository.findAll(pageable);
+    }
+
+    public Optional<ArchEntity> getArchById(String id) {
+        return archRepository.findById(id);
+    }
 }
-*/

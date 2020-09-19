@@ -2,9 +2,7 @@ package com.example.Hotel.api;
 
 
 import com.example.Hotel.Assemblers.RoomModelAssembler;
-import com.example.Hotel.Entity.GuestEntity;
 import com.example.Hotel.Entity.RoomEntity;
-import com.example.Hotel.model.Room;
 import com.example.Hotel.model.RoomModel;
 import com.example.Hotel.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 

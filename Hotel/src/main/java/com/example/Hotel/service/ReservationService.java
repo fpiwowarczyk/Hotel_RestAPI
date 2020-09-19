@@ -1,7 +1,9 @@
 package com.example.Hotel.service;
 
 
+import com.example.Hotel.Entity.ArchEntity;
 import com.example.Hotel.Entity.ReservationEntity;
+import com.example.Hotel.dao.ArchRepository;
 import com.example.Hotel.dao.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,9 @@ import java.util.UUID;
 @Service
 public class ReservationService {
 
+
+    @Autowired
+    private ArchRepository archRepository;
     @Autowired
     private ReservationRepository reservationRepository;
 
@@ -35,7 +40,13 @@ public class ReservationService {
 
     public ResponseEntity<ReservationEntity> deleteReservationById(String id) {
         ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
+        ArchEntity arch = new ArchEntity();
+        arch.setId(reservation.getId());
+        arch.setStart_of(reservation.getStart_of());
+        arch.setEnd_of(reservation.getEnd_of());
+        arch.setGuest_Id_Card_Nr(reservation.getGuest_Id_Card_Nr());
         if(reservation!=null){
+            archRepository.save(arch);
             reservationRepository.deleteById(id);
             return new ResponseEntity<>(null,HttpStatus.OK);
         }
@@ -45,9 +56,6 @@ public class ReservationService {
 
     public ResponseEntity<EntityModel<ReservationEntity>> updateReservationById(String id, ReservationEntity newReservation){
         ReservationEntity reservation = reservationRepository.findById(id).orElse(newReservation);
-        System.out.println(newReservation);
-        System.out.println("Id:"+newReservation.getId());
-        System.out.println("Start_of"+newReservation.getStart_of()+"  End_Of"+newReservation.getEnd_of()+"    Id card nr:"+newReservation.getGuest_Id_Card_Nr());
         if(!StringUtils.isEmpty(newReservation.getEnd_of())&&
         !StringUtils.isEmpty(newReservation.getStart_of())&&
         !StringUtils.isEmpty(newReservation.getGuest_Id_Card_Nr())){

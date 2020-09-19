@@ -3,7 +3,6 @@ package com.example.Hotel.service;
 
 import com.example.Hotel.Entity.GuestEntity;
 import com.example.Hotel.dao.GuestRepository;
-import com.example.Hotel.model.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,7 +55,7 @@ public class GuestService {
         return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<GuestEntity> updatePartGuestById(String idCardNr, Guest newGuest){
+    public ResponseEntity<GuestEntity> updatePartGuestById(String idCardNr, GuestEntity newGuest){
         GuestEntity guest = guestRepository.findById(idCardNr).orElse(null);
         if(guest != null) {
             Optional.ofNullable(newGuest.getName())
