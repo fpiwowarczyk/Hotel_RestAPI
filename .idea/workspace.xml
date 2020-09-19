@@ -19,7 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ade57a5-ed1a-4f9d-907f-b3bf2b725b88" name="Default Changelist" comment="" />
+    <list default="true" id="7ade57a5-ed1a-4f9d-907f-b3bf2b725b88" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,5 +120,9 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2396" y="130" width="1024" height="845" key="SettingsEditor/1920.0.1920.1080/67.27.1853.1053@1920.0.1920.1080" timestamp="1600541657418" />
+    <state x="3039" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1600549360419">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3039" y="257" width="672" height="678" key="search.everywhere.popup/1920.0.1920.1080/67.27.1853.1053@1920.0.1920.1080" timestamp="1600549360419" />
   </component>
 </project>
