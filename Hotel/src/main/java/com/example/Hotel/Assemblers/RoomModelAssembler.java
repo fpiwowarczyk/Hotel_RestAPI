@@ -23,7 +23,6 @@ public class RoomModelAssembler extends RepresentationModelAssemblerSupport<Room
         roomModel.setPrice(entity.getPrice());
         roomModel.setCapacity(entity.getCapacity());
         roomModel.setFree(entity.getFree());
-
         return roomModel;
     }
 }

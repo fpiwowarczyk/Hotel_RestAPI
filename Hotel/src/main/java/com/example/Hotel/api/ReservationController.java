@@ -40,7 +40,7 @@ public class ReservationController {
     private ReservationModelAssembler reservationModelAssembler;
 
     @PostMapping
-    public void addReservation(@RequestBody ReservationEntity reservation){ reservationService.addReservation(reservation);}
+    public ResponseEntity<Link> addReservation(@RequestBody ReservationEntity reservation){ return reservationService.addReservation(reservation);}
 
     @GetMapping
     public ResponseEntity<PagedModel<ReservationModel>> getAllReservations(Pageable pageable) {

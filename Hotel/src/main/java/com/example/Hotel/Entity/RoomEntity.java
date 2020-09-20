@@ -3,10 +3,7 @@ package com.example.Hotel.Entity;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -37,5 +34,22 @@ public class RoomEntity extends RepresentationModel<RoomEntity> {
     public Integer getCapacity(){ return capacity;}
 
     public Boolean getFree(){return free;}
+
+
+    public void setNr(Integer nr){
+        this.nr = nr;
+    }
+
+    public void setPrice(Integer price){
+        this.price = price;
+    }
+
+    public void setCapacity(Integer capacity){
+        this.capacity = capacity;
+    }
+
+    public void setFree(Boolean free){
+        this.free = free;
+    }
 
 }

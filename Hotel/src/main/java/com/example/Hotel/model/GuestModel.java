@@ -19,7 +19,6 @@ public class GuestModel extends RepresentationModel<GuestModel> {
 
     private Integer room;
 
-    private Long version;
 
     public void setIdCardNr(String idCardNr){
         this.idCardNr = idCardNr;
@@ -36,6 +35,7 @@ public class GuestModel extends RepresentationModel<GuestModel> {
     public void setRoom(Integer room){
         this.room = room;
     }
+
 
     public String getIdCardNr(){
         return idCardNr;

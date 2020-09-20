@@ -36,7 +36,9 @@ public class RoomController {
     private RoomModelAssembler roomModelAssembler;
 
     @PostMapping
-    public void addRoom(@RequestBody RoomEntity room){roomService.addRoom(room);}
+    public ResponseEntity<Link> addRoom(@RequestBody RoomEntity room){
+       return  roomService.addRoom(room);
+    }
 
     @GetMapping
     public ResponseEntity<PagedModel<RoomModel>> getAllRooms(Pageable pageable){

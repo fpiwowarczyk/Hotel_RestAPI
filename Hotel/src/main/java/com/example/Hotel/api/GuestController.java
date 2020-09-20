@@ -26,6 +26,7 @@ public class GuestController {
 
     @Autowired
     public GuestController(GuestService guestService){
+
         this.guestService = guestService;
     }
 
@@ -36,8 +37,8 @@ public class GuestController {
     private GuestModelAssembler guestModelAssembler;
 
     @PostMapping
-    public void addGuest(@RequestBody GuestEntity guest){
-        guestService.addGuest(guest);
+    public ResponseEntity<Link> addGuest(@RequestBody GuestEntity guest){
+        return guestService.addGuest(guest);
     }
 
     @GetMapping

@@ -2,17 +2,21 @@ package com.example.Hotel.service;
 
 
 import com.example.Hotel.Entity.GuestEntity;
+import com.example.Hotel.api.GuestController;
 import com.example.Hotel.dao.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Service
 public class GuestService {
@@ -21,8 +25,10 @@ public class GuestService {
     private GuestRepository guestRepository;
 
 
-    public GuestEntity addGuest(GuestEntity guest) {
-        return guestRepository.save(guest);
+    public ResponseEntity<Link> addGuest(GuestEntity guest) {
+        Link link =  linkTo(GuestController.class).slash(guest.getIdCardNr()).withSelfRel();
+        guestRepository.save(guest);
+        return new ResponseEntity<>(link,HttpStatus.CREATED);
     }
 
     public Page<GuestEntity> getAllGuests(Pageable pageable){
@@ -30,10 +36,13 @@ public class GuestService {
     }
 
     public Optional<GuestEntity> getGuestById(String idCardNr){
+        Link link = linkTo(GuestController.class).slash(idCardNr).withSelfRel();
+        Link linkAll = linkTo(GuestController.class).withRel("All Guests");
         return guestRepository.findById(idCardNr);
     }
 
     public ResponseEntity<GuestEntity> deleteGuestById(String idCardNr){
+
         GuestEntity guest = guestRepository.findById(idCardNr).orElse(null);
         if(guest != null){
             guestRepository.deleteById(idCardNr);

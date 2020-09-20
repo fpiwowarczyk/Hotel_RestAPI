@@ -3,10 +3,7 @@ package com.example.Hotel.Entity;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
@@ -63,7 +60,5 @@ public class ReservationEntity extends RepresentationModel<ReservationEntity> {
     public void setGuest_Id_Card_Nr(String guest_id_card_nr){
         this.guest_id_card_nr = guest_id_card_nr;
     }
-
-
 
 }

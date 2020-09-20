@@ -60,4 +60,5 @@ public class GuestEntity extends RepresentationModel<GuestEntity> {
     public void setRoom(Integer room){
         this.room = room;
     }
+
 }

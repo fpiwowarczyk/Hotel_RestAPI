@@ -2,16 +2,20 @@ package com.example.Hotel.service;
 
 
 import com.example.Hotel.Entity.RoomEntity;
+import com.example.Hotel.api.RoomController;
 import com.example.Hotel.dao.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Service
 public class RoomService {
@@ -20,7 +24,11 @@ public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public RoomEntity addRoom(RoomEntity room) {return roomRepository.save(room);}
+    public ResponseEntity<Link> addRoom(RoomEntity room) {
+        Link link = linkTo(RoomController.class).slash(room.getNr()).withSelfRel();
+        roomRepository.save(room);
+        return new ResponseEntity<>(link,HttpStatus.CREATED);
+    }
 
     public Page<RoomEntity> getAllRooms(Pageable pageable) {return roomRepository.findAll(pageable);}
 
