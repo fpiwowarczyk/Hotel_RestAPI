@@ -48,7 +48,7 @@ public class ArchController {
     public ResponseEntity<EntityModel<ArchEntity>> getArchById(@PathVariable("id") String id) {
         Link link = linkTo(ArchController.class).slash(id).withSelfRel();
         Link linkAll = linkTo(ArchController.class).withRel("All archs");
-        EntityModel<ArchEntity> archEntityModel = EntityModel.of(archService.getArchById(id).orElse(null));
+        EntityModel<ArchEntity> archEntityModel = EntityModel.of(archService.getArchById(id).orElse(null),link,linkAll);
         return new ResponseEntity<>(archEntityModel, HttpStatus.OK);
     }
 }

@@ -53,7 +53,7 @@ public class ReservationController {
     public ResponseEntity<EntityModel<ReservationEntity>> getReservationById(@PathVariable("id") String id){
         Link link = linkTo(ReservationController.class).slash(id).withSelfRel();
         Link linkAll = linkTo(ReservationController.class).withRel("All Reservations");
-        EntityModel<ReservationEntity> reservationEntityModel = EntityModel.of(reservationService.getReservationById(id).orElse(null));
+        EntityModel<ReservationEntity> reservationEntityModel = EntityModel.of(reservationService.getReservationById(id).orElse(null),link,linkAll);
         return new ResponseEntity<>(reservationEntityModel,HttpStatus.OK);
     }
 

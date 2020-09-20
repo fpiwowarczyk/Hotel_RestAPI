@@ -49,7 +49,7 @@ public class RoomController {
     public ResponseEntity<EntityModel<RoomEntity>> getRoomById(@PathVariable("nr") Integer nr){
         Link link = linkTo(RoomController.class).slash(nr).withSelfRel();
         Link linkAll = linkTo(RoomController.class).withRel("All Rooms");
-        EntityModel<RoomEntity> roomEntityModel = EntityModel.of(roomService.getRoomByNr(nr).orElse(null));
+        EntityModel<RoomEntity> roomEntityModel = EntityModel.of(roomService.getRoomByNr(nr).orElse(null),link,linkAll);
         return new ResponseEntity<>(roomEntityModel,HttpStatus.OK);
     }
 

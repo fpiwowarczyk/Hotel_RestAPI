@@ -51,7 +51,7 @@ public class GuestController {
     public ResponseEntity<EntityModel<GuestEntity>> getGuestById(@PathVariable("idCardNr") String idCardNr){
         Link link = linkTo(GuestController.class).slash(idCardNr).withSelfRel();
         Link linkAll = linkTo(GuestController.class).withRel("All Guests");
-        EntityModel<GuestEntity> guestEntityModel = EntityModel.of(guestService.getGuestById(idCardNr).orElse(null));
+        EntityModel<GuestEntity> guestEntityModel = EntityModel.of(guestService.getGuestById(idCardNr).orElse(null),link,linkAll);
         return new ResponseEntity<>(guestEntityModel,HttpStatus.OK);
     }
 
